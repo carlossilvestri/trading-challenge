@@ -7,3 +7,5 @@
 
 ## Swagger documentation
 ### On path /swagger-ui.html#/
+
+![Captura de pantalla (308)](https://user-images.githubusercontent.com/54336195/215652465-104a548f-5306-48ab-bc51-a87b88d75a25.png)
