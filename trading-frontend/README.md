@@ -1,7 +1,6 @@
-# vue-carrito-de-compras
+# Trading example using Vue 2
 
-### Un carrito de compras responsive, usando Bootstrap y Vue.js. Además de usar una API para obtener fotos de tamaños especificos.
-### Échale un vistazo en: https://practical-hopper-80e342.netlify.app
+### Trading app example.
 
 ## Project setup
 ```
