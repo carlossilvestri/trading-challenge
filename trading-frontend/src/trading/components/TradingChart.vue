@@ -11,6 +11,7 @@
 <script>
 import TradingVue, { Constants, DataCube, Utils } from "trading-vue-js";
 import { Stream, format, parse_binance } from "@/trading/utils/utils.js";
+import tradingService from "@/trading/services/trading.js";
 
 export default {
   name: "TradingChart",
@@ -21,8 +22,9 @@ export default {
       width: window.innerWidth - 370,
       height: window.innerHeight - 100,
       ohlcv: [],
-      WSS: `${process.env.VUE_APP_WSS_BINANCE}/btcusdt@aggTrade`,
-      URL: `${process.env.VUE_APP_API_BINANCE}/api/v3/klines?symbol=`,
+      WSS: `${process.env.VUE_APP_WSS_BINANCE}`,
+      URL: `${process.env.VUE_APP_BACKEND_URL}/api/kline`,
+      stompClient: null,
     };
   },
   methods: {
@@ -43,12 +45,10 @@ export default {
      */
     async get_lines(range) {
       let [t1, t2] = range;
-      let x = "BTCUSDT";
-      let q = `${x}&interval=1m&startTime=${t1}&endTime=${t2}`;
-      let endPoint = `${this.URL}${q}`;
-
-      let r = await fetch(endPoint).then((r) => r.json());
-      return format(parse_binance(r));
+      let symbol = "BTCUSDT";
+      const payload = { symbol, t1, t2 };
+      const data = await tradingService.get(payload);
+      return format(parse_binance(data));
     },
     on_trades(trade) {
       this.chart.update({

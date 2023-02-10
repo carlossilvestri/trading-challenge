@@ -4,13 +4,15 @@
  * @returns Object
  */
 export const Stream = (url) => {
-  var ws = new WebSocket(url);
-  var cb = () => {};
+  // wss://stream.binance.com:9443/ws/btcusdt@aggTrade
+  // ws://localhost:9090/ws
+  // stream.binance.com/ws/btcusdt@aggTrade
+  let ws = new WebSocket(url);
+  let cb = () => {};
 
   ws.onopen = function () {
     console.log("Websocket is opened");
   };
-
   ws.onmessage = function (data) {
     try {
       data = JSON.parse(data.data);
@@ -47,7 +49,7 @@ export const format = (data) => {
 export const parse_binance = (data) => {
   if (!Array.isArray(data)) return [];
   return data.map((x) => {
-    for (var i = 0; i < x.length; i++) {
+    for (let i = 0; i < x.length; i++) {
       x[i] = parseFloat(x[i]);
     }
     return x.slice(0, 6);
