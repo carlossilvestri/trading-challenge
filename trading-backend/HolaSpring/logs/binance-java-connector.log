@@ -858,3 +858,24 @@ java.io.IOException: Server returned HTTP response code: 451 for URL: https://ap
 2023-02-12 11:56:53.562[1676217413562] | INFO  | clientOutboundChannel-7 | mx.com.gm.ws.WebSocketEventListener  - Received a new web socket connection.
 2023-02-12 11:58:46.742[1676217526742] | INFO  | clientOutboundChannel-6 | mx.com.gm.ws.WebSocketEventListener  - Received a new web socket connection.
 2023-02-12 12:00:02.313[1676217602313] | INFO  | clientOutboundChannel-13 | mx.com.gm.ws.WebSocketEventListener  - Received a new web socket connection.
+2023-02-12 12:06:55.647[1676218015647] | INFO  | SpringApplicationShutdownHook | o.s.m.s.b.SimpleBrokerMessageHandler - Stopping...
+2023-02-12 12:06:55.648[1676218015648] | INFO  | SpringApplicationShutdownHook | o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@3aeeba3b]]
+2023-02-12 12:06:55.648[1676218015648] | INFO  | SpringApplicationShutdownHook | o.s.m.s.b.SimpleBrokerMessageHandler - Stopped.
+2023-02-12 12:06:55.672[1676218015672] | ERROR | OkHttp https://stream.binance.com:9443/... | c.b.c.c.utils.WebSocketConnection    - [Connection 1] Failure
+java.lang.IllegalStateException: Connection closed
+	at org.springframework.util.Assert.state(Assert.java:76)
+	at org.springframework.messaging.simp.stomp.DefaultStompSession.execute(DefaultStompSession.java:290)
+	at org.springframework.messaging.simp.stomp.DefaultStompSession.send(DefaultStompSession.java:241)
+	at org.springframework.messaging.simp.stomp.DefaultStompSession.send(DefaultStompSession.java:228)
+	at mx.com.gm.ws.Client.send(Client.java:55)
+	at mx.com.gm.ws.AggTradeStream.lambda$run$0(AggTradeStream.java:22)
+	at com.binance.connector.client.utils.WebSocketConnection.onMessage(WebSocketConnection.java:85)
+	at okhttp3.internal.ws.RealWebSocket.onReadMessage(RealWebSocket.kt:333)
+	at okhttp3.internal.ws.WebSocketReader.readMessageFrame(WebSocketReader.kt:245)
+	at okhttp3.internal.ws.WebSocketReader.processNextFrame(WebSocketReader.kt:106)
+	at okhttp3.internal.ws.RealWebSocket.loopReader(RealWebSocket.kt:293)
+	at okhttp3.internal.ws.RealWebSocket$connect$1.onResponse(RealWebSocket.kt:195)
+	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:519)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
