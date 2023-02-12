@@ -1,25 +1,37 @@
+import SockJS from "sockjs-client";
+import { over } from "stompjs";
+
 /**
  * Connect to web sockets.
  * @param url: string
  * @returns Object
  */
+let stompClient = null;
 export const Stream = (url) => {
   // wss://stream.binance.com:9443/ws/btcusdt@aggTrade
   // ws://localhost:9090/ws
   // stream.binance.com/ws/btcusdt@aggTrade
-  let ws = new WebSocket(url);
+  let ws = new SockJS(url);
+  stompClient = over(ws);
+  stompClient.connect({}, onConnected, onError);
+  setTimeout(() => {
+    onConnected();
+  }, 500);
   let cb = () => {};
-
-  ws.onopen = function () {
-    console.log("Websocket is opened");
+  const onConnected = () => {
+    console.log("SE CONECTO");
+    let data = null;
+    stompClient.subscribe("/topic/messages", (response) => {
+      try {
+        data = JSON.parse(response.body);
+        cb(data);
+      } catch (e) {
+        console.log(e);
+      }
+    });
   };
-  ws.onmessage = function (data) {
-    try {
-      data = JSON.parse(data.data);
-      cb(data);
-    } catch (e) {
-      console.log(e);
-    }
+  const onError = (err) => {
+    console.log(err);
   };
 
   return {
@@ -27,7 +39,7 @@ export const Stream = (url) => {
       cb = val;
     },
     off() {
-      ws.close(1000);
+      stompClient.disconnect();
     },
   };
 };
