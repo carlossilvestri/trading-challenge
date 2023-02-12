@@ -53,7 +53,6 @@ public class Client {
     }
     public void send(String payload){
         stompSession.send("/app/btcusdt@aggTrade", payload);
-        // stompSession.send("/topic/messages", payload);
     }
     private static List<Transport> createTransportClient() {
         final List<Transport> transports = new ArrayList<>();
